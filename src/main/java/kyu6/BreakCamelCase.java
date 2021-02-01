@@ -16,15 +16,13 @@ public class BreakCamelCase {
     }
 
     public static String camelCase(String input) {
-        Pattern pattern = Pattern.compile("[A-Z]");
+        Pattern pattern = Pattern.compile("([A-Z])");
         Matcher matcher = pattern.matcher(input);
-        String output = input;
+        StringBuffer sb = new StringBuffer();
         while (matcher.find()) {
-            int start = matcher.start();
-            int end = matcher.end();
-            if(input.substring(start-1,end-1).matches("[a-z&\\]]")){
-            output = output.replace(input.substring(start,end), " "+input.substring(start,end));}
+            matcher.appendReplacement(sb," $1");
         }
-        return output;
+        matcher.appendTail(sb);
+        return sb.toString();
     }
 }
